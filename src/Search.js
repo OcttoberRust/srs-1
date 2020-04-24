@@ -1,38 +1,42 @@
 import React, { Component, useReducer } from "react";
 import "./Search.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
 import logo from './alagarinc.jpg';
 
+const element = <FontAwesomeIcon icon={faCoffee} />
 
 class Search extends Component {
   state = {
     searchValue: "",
     resumes: [],
-    locationValue:"",
-    educationValue:"",
-    searches:[["",false],["",false],["",false]],
+    locationValue: "",
+    educationValue: "",
+    searches: [["", false], ["", false], ["", false]],
   };
 
   handleOnChange = event => {
 
-    this.setState({[event.target.name]: event.target.value});    
+    this.setState({ [event.target.name]: event.target.value });
     console.log("handleonchange success");
 
   };
 
   handleSearch = () => {
-    
-    this.state.searches = [[this.state.searchValue, false],[this.state.locationValue,false],[this.state.educationValue,false]];
-    
-    for(var i =0; i < 3; i++){
 
-      if(this.state.searches[i][0] !==""){
+    this.state.searches = [[this.state.searchValue, false], [this.state.locationValue, false], [this.state.educationValue, false]];
+
+    for (var i = 0; i < 3; i++) {
+
+      if (this.state.searches[i][0] !== "") {
         this.state.searches[i][1] = true;
-        
-        if(this.state.searches[1][1]==true){
-          this.state.searches[1][0] = "location:"+this.state.searches[1][0];
+
+        if (this.state.searches[1][1] == true) {
+          this.state.searches[1][0] = "location:" + this.state.searches[1][0];
         }
-        if(this.state.searches[2][1]==true){
-          this.state.searches[2][0] = "education:"+this.state.searches[2][0];
+        if (this.state.searches[2][1] == true) {
+          this.state.searches[2][0] = "education:" + this.state.searches[2][0];
         }
       }
 
@@ -47,8 +51,8 @@ class Search extends Component {
 
 
 
-    for(var i =0; i < 2; i++){
-      if(this.state.searches[i][0] && this.state.searches[i+1][0]){
+    for (var i = 0; i < 2; i++) {
+      if (this.state.searches[i][0] && this.state.searches[i + 1][0]) {
         this.state.searches[i][0] += "+";
       }
     }
@@ -58,8 +62,8 @@ class Search extends Component {
   };
 
   makeApiCall = searchInput => {
-    
-    var searchUrl = "http://localhost:8983/solr/resumes/select?q="+searchInput[0][0]  +searchInput[1][0] +searchInput[2][0];
+
+    var searchUrl = "http://localhost:8983/solr/resumes/select?q=" + searchInput[0][0] + searchInput[1][0] + searchInput[2][0];
     fetch(searchUrl,
       { mode: 'cors' })
       .then(response => {
@@ -67,7 +71,7 @@ class Search extends Component {
         return response.json();
       })
       .then(jsonData => {
-     
+
         this.setState({ resumes: jsonData.response.docs });
       });
   };
@@ -76,11 +80,13 @@ class Search extends Component {
     return (
 
       <div id="main">
-        <div id="logo">
-          <img id="alagarimg" src={logo} alt="logo" />
+        <div id="top">
+          <div id="logo">
+            <img id="alagarimg" src={logo} alt="logo"  />
+          </div>
 
           <h1>Resume search</h1>
-          <div>
+          <div className="searchInput">
             <input
               name="searchValue"
               type="text"
@@ -88,7 +94,7 @@ class Search extends Component {
               onChange={this.handleOnChange}
             />
           </div>
-          <div>
+          <div className="searchInput">
             <input
               name="locationValue"
               type="text"
@@ -96,36 +102,59 @@ class Search extends Component {
               onChange={this.handleOnChange}
             />
           </div>
-          <div>
+          <div className="searchInput">
             <input
               name="educationValue"
               type="text"
               placeholder="Education"
-              onChange={this.handleOnChange}            />
+              onChange={this.handleOnChange} />
+          </div>
+          <div className="searchButton">
+            <button onClick={this.handleSearch}>Search</button>
           </div>
         </div>
-        <div className="searchButton">
-        <button onClick={this.handleSearch}>Search</button>
-        </div>
-      
+        <div className="results">
         {
 
           this.state.resumes ? (
-            <div className="resumes-container">
+            <div className="results">
 
               {this.state.resumes.map(resume =>
-              
-                <div className='center' key={resume.id} >
-                 
-                    <div className="general">
-                    <h1><a href={"https://www.linkedin.com/search/results/all/?keywords="+resume.name+"&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >{resume.name}</a></h1>
 
-                  <p className="location">{resume.location}</p>
-                      <p className="education">{resume.education}</p>
-                      <p className="experience">{resume.experience}</p>
-                      <p className="summary">{resume.summary}</p>
-                    </div>
+                // <div className='center' key={resume.id} >
+
+                //     <div className="general">
+                //     <h1><a href={"https://www.linkedin.com/search/results/all/?keywords="+resume.name+"&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >{resume.name}</a></h1>
+
+                //   <p className="location">{resume.location}</p>
+                //       <p className="education">{resume.education}</p>
+                //       <p className="experience">{resume.experience}</p>
+                //       <p className="summary">{resume.summary}</p>
+                //     </div>
+                //   </div>
+
+                <div class="highcontrast2" key={resume.id}>
+                  <div class="_2iwr"><a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >
+                  <h2>{resume.name}</h2></a></div>
+                  <div class="_2iws">
+                  
                   </div>
+                  <div className="_2iwt"></div>
+                  <div className="_2iwu"></div>
+                  <div className="_2iwv"></div>
+                  <div className="_2iww"></div>
+                  <div className="_2iwx"><h3>Education</h3></div>
+                  <div className="_2iwy">{resume.education}</div>
+                  <div className="_2iwz"><h3>Experience</h3></div>
+                  <div className="_2iw-">{resume.experience}</div>
+                  <div className="_2iw_"><h3>Summary</h3></div>
+                  <div className="_2ix0">{resume.summary}</div>
+
+
+                </div>
+
+
+
 
               )}
 
@@ -137,6 +166,7 @@ class Search extends Component {
             )
 
         }
+        </div>
       </div >
     );
   }

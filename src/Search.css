@@ -1,18 +1,26 @@
-* {
-    margin: 0;
-    padding: 0;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+
+body {
+      background-color: #ffffff;
+  font-family: 'Open Sans';
+  font-size: 12px;
+  font-color: #737373;
 }
+
 h1 {
-    color: #4286f4;
-    margin-top: 30px;
-    margin-bottom: 60px;
+  text-align: center;
+  font-weight: 300;
+  color: #69b5dd;
+  padding-bottom: 60px;
+  padding-top: 50px;
 }
-div {
+.searchInput {
     text-align: center;
     width: 80%;
     margin: 0 auto;
     position: relative;
 }
+
 input {
     width: 100%;
     margin: 10px;
@@ -22,6 +30,7 @@ input {
     box-shadow: 1px 0.5px #888888;
     font-size: 18px;
 }
+
 button {
     padding: 12px 10px;
     width: 30%;
@@ -32,11 +41,14 @@ button {
     font-size: 18px;
 }
 
-/*
-
-*/
-
-@import url('https://fonts.googleapis.com/css?family=Abel');
+.searchButton{
+    padding-bottom: 50px;
+    margin: auto;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
 
 #main{
     position: relative;
@@ -44,46 +56,158 @@ button {
 #alagarimg{
     mix-blend-mode: multiply;
     position: -webkit-sticky; /* Safari */
-  position: relative;
+ 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+input {
+    width: 100%;
+    margin: 10px;
+    padding: 18px 10px;
+    border-radius: 4px;
+    border: 1px solid #4e5766;
+    box-shadow: 1px 0.5px #888888;
+    font-size: 18px;
+}
+
+.highcontrast2{
+  border:1px solid;border-color:#5c5c5c;border-radius:2px;
+padding: 20px;
+  margin:20px;
+background: #bdbdbd;}
+
+
+
+
+
+._2iwo {
+  height: 200px;
+  padding: 12px
+}
+
+.__z8 {
+  height: 150px;
+  padding: 12px
+}
+
+div._2iwr {
+  height: 40px;
+  left: 40px;
+  right: auto;
   top: 0;
-  left:0
-
+  width: 8px;
 }
 
-html, body {
-  background: rgb(255, 255, 255);
-  font-family: Abel, Arial, Verdana, sans-serif;
-  position: relative;
+div._2iws {
+  height: 8px;
+  left: 48px;
+  top: 0
+}
+
+div._2iwt {
+  left: 136px;
+  top: 8px
+}
+
+div._2iwu {
+  height: 12px;
+  left: 48px;
+  top: 14px
+}
+
+div._2iwv {
+  left: 100px;
+  top: 26px
+}
+
+div._2iww {
+  height: 10px;
+  left: 48px;
+  top: 32px
+}
+
+div._2iwx {
+  height: 20px;
+  top: 40px
+}
+
+div._2iwy {
+  left: 410px;
+  top: 60px
+}
+
+div._2iwz {
+  height: 13px;
+  top: 66px
+}
+
+div._2iw- {
+  left: 440px;
+  top: 79px
+}
+
+div._2iw_ {
+  height: 13px;
+  top: 85px
+}
+
+div._2ix0 {
+  left: 178px;
+  top: 98px
+}
+
+@-webkit-keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0
+  }
+  100% {
+    background-position: 468px 0
+  }
+}
+
+@-webkit-keyframes prideShimmer {
+  from {
+    background-position: top left
+  }
+  to {
+    background-position: top right
+  }
+}
+._4-u5 {
+  background-color: #ffffff
+}
+
+._4-u7 {
+  background-color: #ffffff
+}
+
+._57d8 {
+  background-color: #ffffff
+}
+
+._4-u8 {
+  background-color: #ffffff
 }
 
 
-.searchButton{
-    padding-bottom: 50px;
-    margin: auto;
-}
-
-.resumes-container{
-    position:relative;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    box-sizing: border-box;
-    padding: 1rem;
-    padding-top: 0;
-}
-
-.general{
-    width: 100%;
-  height: 100%;
-  background-color: #fff;
-  background: linear-gradient(#f8f8f8, #fff);
-  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
-  margin: 2.5rem;
-  padding: 2.5rem;;
-}
-
+	.btn-linkedin {
+	  background: #0E76A8;
+	  border-radius: 0;
+	  color: #fff;
+	  border-width: 1px;
+	  border-style: solid;
+	  border-color: #084461;
+	}
+	.btn-linkedin:link, .btn-linkedin:visited {
+	  color: #fff;
+	}
+	.btn-linkedin:active, .btn-linkedin:hover {
+	  background: #084461;
+	  color: #fff;
+    }
+    
+    

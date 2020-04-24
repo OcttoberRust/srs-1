@@ -134,10 +134,11 @@ class Search extends Component {
                 //   </div>
 
                 <div class="highcontrast2" key={resume.id}>
-                  <div class="_2iwr"><h2>{resume.name}</h2></div>
-                  <div class="_2iws"><a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >
-                  {<FontAwesomeIcon icon="coffee" />}
-                  </a>
+                  <div class="_2iwr">
+                    
+                    <a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >
+                      <h2>{resume.name}</h2></a>
+                                     
                   </div>
                   <div className="_2iwt"></div>
                   <div className="_2iwu"><h3>Location</h3></div>

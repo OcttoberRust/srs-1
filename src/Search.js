@@ -6,40 +6,69 @@ import logo from './alagarinc.jpg';
 class Search extends Component {
   state = {
     searchValue: "",
-    resumes: []
+    resumes: [],
+    locationValue:"",
+    educationValue:"",
+    searches:[["",false],["",false],["",false]],
   };
 
   handleOnChange = event => {
-    this.setState({ searchValue: event.target.value });
+
+    this.setState({[event.target.name]: event.target.value});    
     console.log("handleonchange success");
 
   };
 
   handleSearch = () => {
-    this.makeApiCall(this.state.searchValue);
-    console.log("handlesearch success");
+    
+    this.state.searches = [[this.state.searchValue, false],[this.state.locationValue,false],[this.state.educationValue,false]];
+    
+    for(var i =0; i < 3; i++){
+
+      if(this.state.searches[i][0] !==""){
+        this.state.searches[i][1] = true;
+        
+        if(this.state.searches[1][1]==true){
+          this.state.searches[1][0] = "location:"+this.state.searches[1][0];
+        }
+        if(this.state.searches[2][1]==true){
+          this.state.searches[2][0] = "education:"+this.state.searches[2][0];
+        }
+      }
+
+
+
+      if (this.state.searches[i][0].indexOf(' ') >= 0) {
+        this.state.searches[i][0] = this.state.searches[i][0].replace(" ", "+")
+        this.state.searches[i][0] = "\"" + this.state.searches[i][0] + "\"";
+
+      }
+    }
+
+
+
+    for(var i =0; i < 2; i++){
+      if(this.state.searches[i][0] && this.state.searches[i+1][0]){
+        this.state.searches[i][0] += "+";
+      }
+    }
+
+
+    this.makeApiCall(this.state.searches);
   };
 
   makeApiCall = searchInput => {
-
-    if (searchInput.indexOf(' ') >= 0) {
-      console.log("yes, searchInput has spaces")
-      searchInput.replace(/ /g, "+")
-    }
-
-    var searchUrl = `http://localhost:8983/solr/resumes/select?q=${searchInput}`;
+    
+    var searchUrl = "http://localhost:8983/solr/resumes/select?q="+searchInput[0][0]  +searchInput[1][0] +searchInput[2][0];
     fetch(searchUrl,
       { mode: 'cors' })
       .then(response => {
-        console.log(".thenresponse success");
 
         return response.json();
       })
       .then(jsonData => {
-        console.log(".thenjson success");
-        console.log(jsonData.id)
-        this.setState({ resumes: jsonData.response.docs }); //might be able to use response later on to condense resumese.response to
-        console.log(this.state.resumes);
+     
+        this.setState({ resumes: jsonData.response.docs });
       });
   };
 
@@ -53,12 +82,26 @@ class Search extends Component {
           <h1>Resume search</h1>
           <div>
             <input
-              name="text"
+              name="searchValue"
               type="text"
               placeholder="Search"
-              onChange={event => this.handleOnChange(event)}
-              value={this.state.searchValue}
+              onChange={this.handleOnChange}
             />
+          </div>
+          <div>
+            <input
+              name="locationValue"
+              type="text"
+              placeholder="Location"
+              onChange={this.handleOnChange}
+            />
+          </div>
+          <div>
+            <input
+              name="educationValue"
+              type="text"
+              placeholder="Education"
+              onChange={this.handleOnChange}            />
           </div>
         </div>
         <div className="searchButton">
@@ -66,10 +109,6 @@ class Search extends Component {
         </div>
       
         {
-
-          console.log("success render before state resume call"),
-          console.log(this.state.resumes[1]),
-          console.log("success render after state resume call"),
 
           this.state.resumes ? (
             <div className="resumes-container">

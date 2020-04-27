@@ -7,59 +7,77 @@ class Search extends Component {
   state = {
     searchValue: "",
     resumes: [],
-    locationValue:"",
-    educationValue:"",
-    searches:[["",false],["",false],["",false]],
+    locationValue: "",
+    educationValue: "",
+    searches: [["", false], ["", false], ["", false]],
   };
 
   handleOnChange = event => {
 
-    this.setState({[event.target.name]: event.target.value});    
-    console.log("handleonchange success");
-
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   handleSearch = () => {
-    
-    this.state.searches = [[this.state.searchValue, false],[this.state.locationValue,false],[this.state.educationValue,false]];
-    
-    for(var i =0; i < 3; i++){
 
-      if(this.state.searches[i][0] !==""){
-        this.state.searches[i][1] = true;
+
+    this.setState({ searches: [[this.state.searchValue, false], [this.state.locationValue, false], [this.state.educationValue, false]] });
+
+    if (this.state.searches[0][0] !== "") {
+      this.state.searches[0][1] = true;      
+    }
+
+    if (this.state.searches[1][0] !== "") {
+      this.state.searches[1][0] = "location:" + this.state.searches[1][0];
+    }
+    if (this.state.searches[2][0] !== "") {
+      this.state.searches[2][0] = "education:" + this.state.searches[2][0];
+    }
+
+      
+      if (this.state.searches[0][0].indexOf(' ') >= 0) {
+        this.state.searches[0][0] =  "\"" +  this.state.searches[0][0].replace(" ", "+") + "\"";
+
+      }
+      if(this.state.searches[1][0].indexOf(' ') >= 0 ){
+
+
+        this.state.searches[1][0] = this.state.searches[1][0].replace(" ", "+") + "\"";
+        this.state.searches[1][0] = this.state.searches[1][0].replace("location:", "location:\"") 
+
+      }
+      if(this.state.searches[2][0].indexOf(' ') >= 0){
+
+
+        this.state.searches[2][0] = this.state.searches[2][0].replace(" ", "+") + "\"";
+        this.state.searches[2][0] = this.state.searches[2][0].replace("education:", "education:\"") 
+
+      
         
-        if(this.state.searches[1][1]==true){
-          this.state.searches[1][0] = "location:"+this.state.searches[1][0];
-        }
-        if(this.state.searches[2][1]==true){
-          this.state.searches[2][0] = "education:"+this.state.searches[2][0];
-        }
-      }
-
-
-
-      if (this.state.searches[i][0].indexOf(' ') >= 0) {
-        this.state.searches[i][0] = this.state.searches[i][0].replace(" ", "+")
-        this.state.searches[i][0] = "\"" + this.state.searches[i][0] + "\"";
 
       }
+
+
+    if(this.state.searches[0][0] && this.state.searches[1][0]){
+      this.state.searches[0][0] += "+"; 
+    } else if(this.state.searches[0][0] && this.state.searches[2][0]){
+      this.state.searches[0][0] += "+"; 
     }
-
-
-
-    for(var i =0; i < 2; i++){
-      if(this.state.searches[i][0] && this.state.searches[i+1][0]){
-        this.state.searches[i][0] += "+";
-      }
+    if(this.state.searches[1][0] && this.state.searches[2][0]){
+      this.state.searches[1][0] += "+"; 
     }
-
 
     this.makeApiCall(this.state.searches);
+
+    
   };
 
   makeApiCall = searchInput => {
+
+
+    var searchUrl = "http://localhost:8983/solr/resumes/select?q=" + searchInput[0][0] + 
+    searchInput[1][0] + searchInput[2][0];
     
-    var searchUrl = "http://localhost:8983/solr/resumes/select?q="+searchInput[0][0]  +searchInput[1][0] +searchInput[2][0];
+
     fetch(searchUrl,
       { mode: 'cors' })
       .then(response => {
@@ -67,7 +85,7 @@ class Search extends Component {
         return response.json();
       })
       .then(jsonData => {
-     
+
         this.setState({ resumes: jsonData.response.docs });
       });
   };
@@ -101,31 +119,31 @@ class Search extends Component {
               name="educationValue"
               type="text"
               placeholder="Education"
-              onChange={this.handleOnChange}            />
+              onChange={this.handleOnChange} />
           </div>
         </div>
         <div className="searchButton">
-        <button onClick={this.handleSearch}>Search</button>
+          <button onClick={this.handleSearch}>Search</button>
         </div>
-      
+
         {
 
           this.state.resumes ? (
             <div className="resumes-container">
 
               {this.state.resumes.map(resume =>
-              
-                <div className='center' key={resume.id} >
-                 
-                    <div className="general">
-                    <h1><a href={"https://www.linkedin.com/search/results/all/?keywords="+resume.name+"&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >{resume.name}</a></h1>
 
-                  <p className="location">{resume.location}</p>
-                      <p className="education">{resume.education}</p>
-                      <p className="experience">{resume.experience}</p>
-                      <p className="summary">{resume.summary}</p>
-                    </div>
+                <div className='center' key={resume.id} >
+
+                  <div className="general">
+                    <h1><a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >{resume.name}</a></h1>
+
+                    <p className="location">{resume.location}</p>
+                    <p className="education">{resume.education}</p>
+                    <p className="experience">{resume.experience}</p>
+                    <p className="summary">{resume.summary}</p>
                   </div>
+                </div>
 
               )}
 

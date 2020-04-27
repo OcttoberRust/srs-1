@@ -94,11 +94,13 @@ class Search extends Component {
     return (
 
       <div id="main">
-        <div id="logo">
-          <img id="alagarimg" src={logo} alt="logo" />
+        <div id="top">
+          <div id="logo">
+            <img id="alagarimg" src={logo} alt="logo"  />
+          </div>
 
           <h1>Resume search</h1>
-          <div>
+          <div className="searchInput">
             <input
               name="searchValue"
               type="text"
@@ -106,7 +108,7 @@ class Search extends Component {
               onChange={this.handleOnChange}
             />
           </div>
-          <div>
+          <div className="searchInput">
             <input
               name="locationValue"
               type="text"
@@ -114,36 +116,60 @@ class Search extends Component {
               onChange={this.handleOnChange}
             />
           </div>
-          <div>
+          <div className="searchInput">
             <input
               name="educationValue"
               type="text"
               placeholder="Education"
               onChange={this.handleOnChange} />
           </div>
+          <div className="searchButton">
+            <button onClick={this.handleSearch}>Search</button>
+          </div>
         </div>
-        <div className="searchButton">
-          <button onClick={this.handleSearch}>Search</button>
-        </div>
-
+        <div className="results">
         {
 
           this.state.resumes ? (
-            <div className="resumes-container">
+            <div className="results">
 
               {this.state.resumes.map(resume =>
 
-                <div className='center' key={resume.id} >
+                // <div className='center' key={resume.id} >
 
-                  <div className="general">
-                    <h1><a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >{resume.name}</a></h1>
+                //     <div className="general">
+                //     <h1><a href={"https://www.linkedin.com/search/results/all/?keywords="+resume.name+"&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >{resume.name}</a></h1>
 
-                    <p className="location">{resume.location}</p>
-                    <p className="education">{resume.education}</p>
-                    <p className="experience">{resume.experience}</p>
-                    <p className="summary">{resume.summary}</p>
+                //   <p className="location">{resume.location}</p>
+                //       <p className="education">{resume.education}</p>
+                //       <p className="experience">{resume.experience}</p>
+                //       <p className="summary">{resume.summary}</p>
+                //     </div>
+                //   </div>
+
+                <div class="highcontrast2" key={resume.id}>
+                  <div class="_2iwr">
+                    
+                    <a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >
+                      <h2>{resume.name}</h2></a>
+                                     
                   </div>
+                  <div className="_2iwt"></div>
+                  <div className="_2iwu"><h3>Location</h3></div>
+                  <div className="_2iwv">{resume.location}</div>
+                  <div className="_2iww"></div>
+                  <div className="_2iwx"><h3>Education</h3></div>
+                  <div className="_2iwy">{resume.education}</div>
+                  <div className="_2iwz"><h3>Experience</h3></div>
+                  <div className="_2iw-">{resume.experience}</div>
+                  <div className="_2iw_"><h3>Summary</h3></div>
+                  <div className="_2ix0">{resume.summary}</div>
+
+
                 </div>
+
+
+
 
               )}
 
@@ -155,6 +181,7 @@ class Search extends Component {
             )
 
         }
+        </div>
       </div >
     );
   }

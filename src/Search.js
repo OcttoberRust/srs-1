@@ -1,11 +1,8 @@
 import React, { Component, useReducer } from "react";
 import "./Search.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 import logo from './alagarinc.jpg';
 
-const element = <FontAwesomeIcon icon={faCoffee} />
 
 class Search extends Component {
   state = {
@@ -154,11 +151,23 @@ class Search extends Component {
                 <div class="highcontrast2" key={resume.id}>
                   <div class="_2iwr">
                     
-                    <a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >
-                      <h2>{resume.name}</h2></a>
+    
+                      <h2>{resume.name}</h2>
                                      
                   </div>
-                  <div className="_2iwt"></div>
+
+                  <div className="_2iwt">
+                    
+                     <a href={"https://www.linkedin.com/search/results/all/?keywords=" + resume.name + "&origin=GLOBAL_SEARCH_HEADER"} target="_blank" >
+                    <div className="searches"><i class="fab fa-linkedin fa-3x" ></i></div> 
+                    </a>
+                    <a href={"https://www.google.com/search?q="+resume.name+"+"+resume.location} target="_blank" >
+                     <div className="searches">  <i class="fab fa-google fa-3x"></i></div>
+                     </a>
+                     
+                     </div>
+                  
+
                   <div className="_2iwu"><h3>Location</h3></div>
                   <div className="_2iwv">{resume.location}</div>
                   <div className="_2iww"></div>

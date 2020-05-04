@@ -127,6 +127,9 @@ class Search extends Component {
           <div className="searchButton">
             <button onClick={this.handleSearch}>Search</button>
           </div>
+          <div className="clearButton">
+            <button onClick="">Clear</button>
+          </div>
         </div>
         <div className="results">
         {
